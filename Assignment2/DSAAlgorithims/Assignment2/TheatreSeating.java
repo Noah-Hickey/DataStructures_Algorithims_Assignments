@@ -1,6 +1,5 @@
 package DSAAlgorithims.Assignment2;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
@@ -69,23 +68,29 @@ public class TheatreSeating {
             System.out.println();
             System.out.println("Welcome to the Theatre Seating System!");
             System.out.println();
-            System.out.println("Here are the seats to choose from:");
-            System.out.println();
-            for (int i = 0; i < seatArray.length; ++i) {
-                for (int j = 0; j < seatArray[i].length; ++j) {
-                    System.out.print(seatArray[i][j]);
-                }
-                System.out.println();
-            }
 
             System.out.println();
             System.out.println("Please enter what you would like to do from the following options: ");
-            System.out.println("To reserve, enter seat number from list above.");
+            System.out.println("To display seats, enter DISPLAY.");
+            System.out.println("To reserve, enter a valid seat number");
             System.out.println("To remove, enter REMOVE <seat> (ex: REMOVE C2).");
             System.out.println("To exit, enter EXIT.");
             System.out.println();
             System.out.println("Please enter your option:");
             String customerInput = scanner.nextLine().trim().toUpperCase();
+
+            System.out.println();
+            if (customerInput.equals("DISPLAY")) {
+                System.out.println("Here are the seats to choose from: ");
+                System.out.println();
+                for (int i = 0; i < seatArray.length; ++i) {
+                    for (int j = 0; j < seatArray[i].length; ++j) {
+                        System.out.print(seatArray[i][j]);
+                    }
+                    System.out.println();
+                }
+                continue;
+            }
 
             // Exiting the program //
             if (customerInput.equals("EXIT")) {
