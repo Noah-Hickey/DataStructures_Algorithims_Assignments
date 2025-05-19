@@ -114,7 +114,7 @@ public class TheatreSeating {
             if (customerInput.startsWith("REMOVE")){
                 if (customerInput.length() <= "REMOVE ".length()) {
                     System.out.println("Please specify a seat to remove.");
-                    // In place in case no seat is added after REMOVE //
+                    // Just in case no seat is added after REMOVE //
                     continue;
                 }
 
@@ -132,7 +132,6 @@ public class TheatreSeating {
                 }
 
             }
-
 
         }
 
