@@ -1,8 +1,13 @@
 package org.linkedlist.assignment3;
 
-import java.util.LinkedList;
 
 public class LinkedList {
+
+    public static class Node {
+        public int value;
+        public Node next;
+    }
+
 
     public Node head;
     public Node tail;
@@ -29,11 +34,13 @@ public class LinkedList {
         } else if (location == 0) {
             node.next = head;
             head = node;
+            size++;
 
         } else if (location >= size){
             node.next = null;
             tail.next = node;
             tail = node;
+            size++;
         } else {
             Node tempNode = head;
             int index = 0;
@@ -44,6 +51,7 @@ public class LinkedList {
             Node nextNode = tempNode.next;
             tempNode.next = node;
             node.next = nextNode;
+            size++;
         }
 
     }
@@ -52,11 +60,13 @@ public class LinkedList {
 
         if (head == null) {
             System.out.println("List is empty");
+            return;
         }
 
         // If position is out of bounds, print that it is //
         if (position < 0 || position >= size){
             System.out.println("Invalid position.");
+            return;
         }
 
 
@@ -68,9 +78,8 @@ public class LinkedList {
 
             if (size == 0){
                 tail = null;
-                return;
             }
-
+        return;
         }
 
 

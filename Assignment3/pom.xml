@@ -14,6 +14,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>24</maven.compiler.target>
     <maven.compiler.source>24</maven.compiler.source>
+      <maven.compiler.release>24</maven.compiler.release>
+      <exec.mainClass>org.linkedlist.assignment3.MyLinkedList</exec.mainClass>
     <junit.version>5.11.0</junit.version>
   </properties>
 
