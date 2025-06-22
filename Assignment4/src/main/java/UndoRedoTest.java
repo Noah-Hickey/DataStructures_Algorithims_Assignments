@@ -107,7 +107,7 @@ public class UndoRedoTest {
         try {
             undoRedo.addState(null);
         } catch (IllegalArgumentException e) {
-            System.out.println("Caught expected error: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
 
         // Test operations on empty undo-redo //

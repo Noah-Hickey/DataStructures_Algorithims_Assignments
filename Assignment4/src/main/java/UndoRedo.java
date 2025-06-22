@@ -1,119 +1,111 @@
-
+import java.util.LinkedList;
 
 public class UndoRedo<T> {
 
-    private class Node {
-        T data; //Allows us to store any type of data type //
-        Node prev, next;
+    private final LinkedList<T> states;
+    private int currentIndex;
 
-        Node(T data) {
-            this.data = data;
-        }
-
+    public UndoRedo() {
+        this.states = new LinkedList<>();
+        this.currentIndex = -1; // -1 as there are no states yet /
     }
 
-    private Node head; // Points to the start of the list //
-    private Node current; // Points to the current position in the list //
-
     public void addState(T state) {
-
-        // Checks if state is null //
         if (state == null) {
             throw new IllegalArgumentException("State cannot be null");
         }
 
-        Node newNode = new Node(state);
-
-        if (head == null) {
-            head = newNode;
-            current = head;
-        } else {
-           clearFutureStates();
-
-            newNode.prev = current;
-            if (current != null) current.next = newNode;
-            current = newNode;
+        // Remove all states after the current position //
+        while (states.size() > currentIndex + 1) {
+            states.removeLast();
         }
-    }
 
-    private void clearFutureStates() {
-        if (current != null) {
-            current.next = null; // Clear future states when adding a new state //
-        }
-    }
-
-    // Undo and Redo Methods //
-    public T redo() {
-        if (current != null && current.next != null) {
-            current = current.next; // Move to the next state //
-            return current.data; // Return the data of the new current state //
-        }
-        return null; // No previous states to undo //
+        // Add a new state //
+        states.add(state);
+        currentIndex++;
     }
 
     public T undo() {
-        if (current != null && current.prev != null) {
-            current = current.prev; // Move to the previous state //
-            return current.data; // Return the data of the new current state //
+        if (canUndo()) {
+            currentIndex--;
+            return states.get(currentIndex);
         }
-        return null; // No next states to redo //
+        return null;
+    }
+
+    public T redo() {
+        if (canRedo()) {
+            currentIndex++;
+            return states.get(currentIndex);
+        }
+        return null;
     }
 
     public T getCurrentState() {
-        return current != null ? current.data : null; // Return the data of the current state //
+        if (currentIndex >= 0 && currentIndex < states.size()) {
+            return states.get(currentIndex);
+        }
+        return null;
     }
 
-
-    // Checks if the operation can be done //
     public boolean canUndo() {
-        return current != null && current.prev != null;
+        return currentIndex > 0;
     }
 
-    // Checks if the operation can be done //
     public boolean canRedo() {
-        return current != null && current.next != null;
+        return currentIndex < states.size() - 1;
     }
 
     public int getRedoCount() {
-        int count = 0;
-        Node temp = current;
-        while (temp != null && temp.next != null) {
-            count++;
-            temp = temp.next;
-        }
-        return count;
+        return states.size() - currentIndex - 1;
     }
 
-     //Clears all states and resets the undo-redo system. //
+    // Clear all states and reset the current index //
     public void clear() {
-        head = null;
-        current = null;
+        states.clear();
+        currentIndex = -1;
     }
 
-
-    // Boolean for if there are no states in the system //
     public boolean isEmpty() {
-        return head == null;
+        return states.isEmpty();
     }
 
-    // Prints all states in the system //
     public void printStates() {
-        if (head == null) {
+        if (states.isEmpty()) {
             System.out.println("No states available");
             return;
         }
 
-        Node temp = head;
         System.out.print("States: ");
-        while (temp != null) {
-            if (temp == current) {
-                System.out.print("[" + temp.data + "] ");
+        for (int i = 0; i < states.size(); i++) {
+            if (i == currentIndex) {
+                System.out.print("[" + states.get(i) + "] ");
             } else {
-                System.out.print(temp.data + " ");
+                System.out.print(states.get(i) + " ");
             }
-            temp = temp.next;
         }
         System.out.println();
+    }
+
+    // Additional helpful methods //
+    public int getStateCount() {
+        return states.size();
+    }
+
+    public T getFirstState() {
+        return states.isEmpty() ? null : states.getFirst();
+    }
+
+    public T getLastState() {
+        return states.isEmpty() ? null : states.getLast();
+    }
+
+    // Get state at specific position (0-based)
+    public T getStateAt(int index) {
+        if (index >= 0 && index < states.size()) {
+            return states.get(index);
+        }
+        return null;
     }
 
 }
