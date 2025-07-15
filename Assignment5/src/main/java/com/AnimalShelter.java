@@ -1,7 +1,10 @@
 package com;
 
 import model.Animal;
+import model.Animal.Cat;
+import model.Animal.Dog;
 
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -12,8 +15,13 @@ public class AnimalShelter {
     public Stack<AnimalShelter> animalStack;
     public int orderNumber = 0;
 
+    public AnimalShelter() {
+        dogQueue = new LinkedList<>();
+        catQueue = new LinkedList<>();
+    }
+
     public void enqueue(Animal animal) {
-        animal.setOrder(order++);
+        animal.setOrderNumber(orderNumber++);
         if (animal instanceof Dog) {
             dogQueue.add((Dog) animal);
         } else if (animal instanceof Cat) {
