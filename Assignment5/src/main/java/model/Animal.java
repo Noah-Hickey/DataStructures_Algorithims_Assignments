@@ -1,6 +1,6 @@
 package model;
 
-abstract class Animal {
+public abstract class Animal {
 
     private int orderNumber;
     private String name;
@@ -31,13 +31,13 @@ abstract class Animal {
         return this.orderNumber < a.orderNumber;
     }
 
-    class Dog extends Animal {
+    public class Dog extends Animal {
         public Dog(int orderNumber, String name) {
             super(orderNumber, name);
         }
     }
 
-    class Cat extends Animal {
+    public class Cat extends Animal {
         public Cat(int orderNumber, String name) {
             super(orderNumber, name);
         }
